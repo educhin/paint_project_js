@@ -12,6 +12,7 @@ const ctx = canvas.getContext('2d')
 
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
+    draw();
 });
 
 function setCanvas(){
@@ -39,6 +40,15 @@ function setCanvas(){
      return deg * Math.PI / 180;
  }
 
-
+ function draw() {
+    if(pressed) {
+      ctx.fillStyle = 'rgb(255, 0, 12)'
+      ctx.beginPath();
+      ctx.arc(curX, curY, 10, degToRad(0), degToRad(360), false);
+      ctx.fill();
+    }
+ 
+    requestAnimationFrame(draw);
+  }
 
  
