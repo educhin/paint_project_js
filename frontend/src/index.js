@@ -2,7 +2,7 @@
 // Set up canvas initially 
 const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
-const height = canvas.height = window.innerHeight
+const height = canvas.height = window.innerHeight-100
 const ctx = canvas.getContext('2d')
 
  // store mouse pointer coordinates, and whether the button is pressed
@@ -44,7 +44,7 @@ function setCanvas(){
     if(pressed) {
       ctx.fillStyle = 'rgb(255, 0, 12)'
       ctx.beginPath();
-      ctx.arc(curX, curY, 10, degToRad(0), degToRad(360), false);
+      ctx.arc(curX, curY-100, 10, degToRad(0), degToRad(360), false);
       ctx.fill();
     }
  
