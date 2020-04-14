@@ -4,6 +4,19 @@ const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
 const height = canvas.height = window.innerHeight-100
 const ctx = canvas.getContext('2d')
+const colors = {
+    red: 'red',
+    orange: 'orange',
+    yellow: 'yellow',
+    green: 'green',
+    blue: 'blue',
+    indigo: 'indigo',
+    violet: 'violet'
+}
+
+const paletteDiv = document.querySelector('#palette')
+
+const palette = new Palette(colors, paletteDiv)
 
  // store mouse pointer coordinates, and whether the button is pressed
  let curX;
@@ -13,6 +26,7 @@ const ctx = canvas.getContext('2d')
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
     draw();
+    palette.setUpPalette()
 });
 
 function setCanvas(){
@@ -42,7 +56,7 @@ function setCanvas(){
 
  function draw() {
     if(pressed) {
-      ctx.fillStyle = 'rgb(255, 0, 12)'
+      ctx.fillStyle = palette.currentColor
       ctx.beginPath();
       ctx.arc(curX, curY-100, 10, degToRad(0), degToRad(360), false);
       ctx.fill();

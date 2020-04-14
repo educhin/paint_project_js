@@ -19,3 +19,8 @@
     width: 600px;
     background: whitesmoke;
 }
+
+.colorSelectBtn {
+    width: 10px;
+    height: 10px;
+}
