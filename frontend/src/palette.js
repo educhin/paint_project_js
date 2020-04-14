@@ -13,12 +13,11 @@ class Palette {
             let btn = document.createElement('button')
             btn.classList.add('colorSelectBtn')   
             btn.style.backgroundColor = this.colors[col]
-            var that = this
+            const that = this
             btn.addEventListener('click', function(e){
                 that.selectColor(e).bind(that)
             })
             
-            // this.addClickHandler(btn, that)
             this.location.appendChild(btn)
           }
     }
