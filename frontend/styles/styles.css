@@ -5,22 +5,42 @@
     margin-right: auto;
     display: block;
 }
-
+/* 
 #toolbar {
     display: block;
     height: 100px;
     width: 600px;
-    background: whitesmoke;
-}
+    background: grey;
+} */
 
-#palette {
-    display: block;
-    height: 100px;
-    width: 600px;
-    background: whitesmoke;
+#palette, #toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    width: 250px;
+    background: grey;
 }
 
 .colorSelectBtn {
+    /* display: inline-block; */
     width: 10px;
-    height: 10px;
+    height: 20px;
+}
+#currentColor {
+    /* margin-top: 10px;
+    margin-left: 10px; */
+    
+    background-color: rgb(255, 255, 255);
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    border-color: black;
+}
+
+#colorPalette {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

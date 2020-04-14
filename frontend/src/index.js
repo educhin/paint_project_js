@@ -3,8 +3,12 @@
 const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
 const height = canvas.height = window.innerHeight-100
+// const width = canvas.width
+// const height = canvas.height
 const ctx = canvas.getContext('2d')
 const colors = {
+    white: 'white',
+    black: 'black',
     red: 'red',
     orange: 'orange',
     yellow: 'yellow',
@@ -14,7 +18,7 @@ const colors = {
     violet: 'violet'
 }
 
-const paletteDiv = document.querySelector('#palette')
+const paletteDiv = document.querySelector('#colorPalette')
 
 const palette = new Palette(colors, paletteDiv)
 

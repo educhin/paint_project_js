@@ -23,8 +23,9 @@ class Palette {
     }
 
     selectColor(e){
+        let div = document.querySelector('#currentColor')
         this.currentColor = e.target.style.backgroundColor
-        console.log(String(this.currentColor))
+        div.style.backgroundColor = this.currentColor
     }
 
 
