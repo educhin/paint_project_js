@@ -28,12 +28,5 @@ class Palette {
         console.log(String(this.currentColor))
     }
 
-    // addClickHandler(elem, currentColor) {
-    //     elem.addEventListener('click', function(e) {
-    //         currentColor = e.target.style.backgroundColor
-    //         console.log(this)
-    //     }, false);
-    // }
-
 
 }
