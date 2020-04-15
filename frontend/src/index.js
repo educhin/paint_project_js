@@ -1,8 +1,7 @@
-
 // Set up canvas initially 
 const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
-const height = canvas.height = window.innerHeight-100
+const height = canvas.height = window.innerHeight-60
 // const width = canvas.width
 // const height = canvas.height
 const ctx = canvas.getContext('2d')
@@ -62,7 +61,7 @@ function setCanvas(){
     if(pressed) {
       ctx.fillStyle = palette.currentColor
       ctx.beginPath();
-      ctx.arc(curX, curY-100, 10, degToRad(0), degToRad(360), false);
+      ctx.arc(curX, curY-60, 10, degToRad(0), degToRad(360), false);
       ctx.fill();
     }
  
