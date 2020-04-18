@@ -68,4 +68,13 @@ function setCanvas(){
     requestAnimationFrame(draw);
   }
 
- 
+  function saveImageToDB(){
+    // e.preventDefault()
+
+    canvas.toBlob(function(blob){
+      let url = URL.createObjectURL(blob)
+      console.log(url)
+    }, 'image/jpeg', 0.95)
+
+  }
+
