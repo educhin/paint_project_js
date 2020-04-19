@@ -3,7 +3,7 @@ class Palette {
         
         this.colors = colors
         this.location = location
-        this.currentColor = 'white'
+        this.currentColor = '#FFFFFF'
 
     }
     
