@@ -69,7 +69,7 @@ function fetchPalette(index){
 
  function draw() {
     if(pressed) {
-      ctx.fillStyle = palette.currentColor
+      ctx.fillStyle = document.querySelector('#currentColor').style.backgroundColor
       ctx.beginPath();
       ctx.arc(curX, curY-60, 10, degToRad(0), degToRad(360), false);
       ctx.fill();
