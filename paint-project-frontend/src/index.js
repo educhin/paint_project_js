@@ -8,8 +8,6 @@ const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
 const height = canvas.height = window.innerHeight-60;
 const ctx = canvas.getContext('2d');
-// const width = canvas.width
-// const height = canvas.height
 
 const paletteDiv = document.querySelector('#colorPalette');
 let colorPalette;
@@ -21,12 +19,11 @@ let colorPalette;
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
     draw();
-    // palette.setUpPalette()
     fetchPalette(0)
 });
 
 function setCanvas(){
-    ctx.fillStyle = 'rgb(0, 0, 0)'
+    ctx.fillStyle = '000000'
     ctx.fillRect(0, 0, width, height)
 }
 
@@ -69,6 +66,7 @@ function setPaletteObject(colors, location){
      return deg * Math.PI / 180;
  }
 
+ // Looping draw function to be called during initial set up. 
  function draw() {
     if(pressed) {
       ctx.fillStyle = colorPalette.currentColor
