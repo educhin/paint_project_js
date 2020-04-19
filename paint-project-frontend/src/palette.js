@@ -20,8 +20,6 @@ class Palette {
             
             this.location.appendChild(btn)
           }
-        let div = document.querySelector('#currentColor')
-        div.style.backgroundColor = this.currentColor
     }
 
     selectColor(e){

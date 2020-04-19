@@ -1,19 +1,18 @@
 //Fetch URLs
-const BASE_URL = "http://localhost:3000"
-const PALETTES_URL = `${BASE_URL}/palettes`
-const ARTIST_URL = `${BASE_URL}/artists`
+const BASE_URL = "http://localhost:3000";
+const PALETTES_URL = `${BASE_URL}/palettes`;
+const ARTIST_URL = `${BASE_URL}/artists`;
 
 // Set up canvas initially 
 const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
-const height = canvas.height = window.innerHeight-60
-const ctx = canvas.getContext('2d')
+const height = canvas.height = window.innerHeight-60;
+const ctx = canvas.getContext('2d');
 // const width = canvas.width
 // const height = canvas.height
 
-const paletteDiv = document.querySelector('#colorPalette')
-
-
+const paletteDiv = document.querySelector('#colorPalette');
+let colorPalette;
  // store mouse pointer coordinates, and whether the button is pressed
  let curX;
  let curY;
@@ -41,13 +40,16 @@ function fetchPalette(index){
   fetch(PALETTES_URL, obj)
   .then(response => response.json())
   .then(obj => obj[index].colors)
-  .then(colors => new Palette(colors, paletteDiv))
+  .then(colors => setPaletteObject(colors, paletteDiv))
   .then(palette => palette.setUpPalette())
   .catch(error => console.log(error.message))
 }
 
 
-
+function setPaletteObject(colors, location){
+  colorPalette = new Palette(colors, location)
+  return colorPalette
+}
 
  // update mouse pointer coordinates
  document.onmousemove = function(e) {
@@ -69,7 +71,8 @@ function fetchPalette(index){
 
  function draw() {
     if(pressed) {
-      ctx.fillStyle = document.querySelector('#currentColor').style.backgroundColor
+      ctx.fillStyle = colorPalette.currentColor
+
       ctx.beginPath();
       ctx.arc(curX, curY-60, 10, degToRad(0), degToRad(360), false);
       ctx.fill();
