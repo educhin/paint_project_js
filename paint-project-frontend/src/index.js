@@ -1,25 +1,18 @@
+//Fetch URLs
+const BASE_URL = "http://localhost:3000"
+const PALETTES_URL = `${BASE_URL}/palettes`
+const ARTIST_URL = `${BASE_URL}/artists`
+
 // Set up canvas initially 
 const canvas = document.querySelector('.myCanvas')
 const width = canvas.width = window.innerWidth
 const height = canvas.height = window.innerHeight-60
+const ctx = canvas.getContext('2d')
 // const width = canvas.width
 // const height = canvas.height
-const ctx = canvas.getContext('2d')
-const colors = {
-    white: 'white',
-    black: 'black',
-    red: 'red',
-    orange: 'orange',
-    yellow: 'yellow',
-    green: 'green',
-    blue: 'blue',
-    indigo: 'indigo',
-    violet: 'violet'
-}
 
 const paletteDiv = document.querySelector('#colorPalette')
 
-const palette = new Palette(colors, paletteDiv)
 
  // store mouse pointer coordinates, and whether the button is pressed
  let curX;
@@ -29,13 +22,30 @@ const palette = new Palette(colors, paletteDiv)
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
     draw();
-    palette.setUpPalette()
+    // palette.setUpPalette()
+    fetchPalette(0)
 });
 
 function setCanvas(){
     ctx.fillStyle = 'rgb(0, 0, 0)'
     ctx.fillRect(0, 0, width, height)
 }
+
+function fetchPalette(index){
+  let obj = {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    } 
+  }
+  fetch(PALETTES_URL, obj)
+  .then(response => response.json())
+  .then(obj => obj[index].colors)
+  .then(colors => new Palette(colors, paletteDiv))
+  .then(palette => palette.setUpPalette())
+  .catch(error => console.log(error.message))
+}
+
 
 
 
