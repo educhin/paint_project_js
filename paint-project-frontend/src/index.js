@@ -1,7 +1,7 @@
 //Fetch URLs
 const BASE_URL = "http://localhost:3000";
 const PALETTES_URL = `${BASE_URL}/palettes`;
-const ARTIST_URL = `${BASE_URL}/artists`;
+const MASTERPIECE_URL = `${BASE_URL}/masterpieces`;
 
 // Set up canvas initially 
 const canvas = document.querySelector('.myCanvas')
@@ -36,6 +36,7 @@ function fetchPalette(index){
   }
   fetch(PALETTES_URL, obj)
   .then(response => response.json())
+  // .then(obj => console.log(obj))
   .then(obj => obj[index].colors)
   .then(colors => setPaletteObject(colors, paletteDiv))
   .then(palette => palette.setUpPalette())
@@ -78,14 +79,60 @@ function setPaletteObject(colors, location){
  
     requestAnimationFrame(draw);
   }
+  // Event to test saveImageToDB function
+  document.addEventListener('keypress', saveImageToDB);
 
-  function saveImageToDB(){
-    // e.preventDefault()
+  function saveImageToDB(event){
+    if (event.code === 'Space'){
+      event.preventDefault()
 
-    canvas.toBlob(function(blob){
-      let url = URL.createObjectURL(blob)
-      console.log(url)
-    }, 'image/jpeg', 0.95)
 
+      var dataURL = canvas.toDataURL();
+      // console.log(dataURL);
+
+      let newImage = new Image(width, height)
+
+      newImage.src = dataURL
+
+      // document.body.appendChild(newImage);
+
+      let artistName = 'test';
+      let masterpieceName = 'test'
+  
+      // canvas.toBlob(function(blob){
+      //   url = URL.createObjectURL(blob)
+      //   console.log(url)
+      // }, 'image/jpeg', 0.95)
+  
+      obj = {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              artist_name: artistName,
+              masterpiece_name: masterpieceName,
+              masterpiece: newImage
+          })
+      }
+
+      // console.log(obj)
+  
+      fetch(MASTERPIECE_URL, obj)
+      .then(response => response.json())
+      .then(obj => appendReturnedImage(obj))
+      // .then(obj => console.log(obj))
+      .catch(error => console.log(error))
+    } else {
+      console.log('This key don\'t do shit')
+    }
+  }
+
+  function appendReturnedImage(object){
+    let newImage = new Image(width, height)
+
+    newImage.src = object.url
+
+    document.body.appendChild(newImage);
   }
 
