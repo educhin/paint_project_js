@@ -10,7 +10,9 @@ const height = canvas.height = window.innerHeight-60;
 const ctx = canvas.getContext('2d');
 
 const paletteDiv = document.querySelector('#colorPalette');
+const toolBar = document.querySelector('#toolbar');
 let colorPalette;
+
  // store mouse pointer coordinates, and whether the button is pressed
  let curX;
  let curY;
@@ -19,7 +21,10 @@ let colorPalette;
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
     draw();
-    fetchPalette(0)
+    setUpSave();
+    // setUpLoad();
+    fetchMasterpieces();
+    fetchPalette(0);
 });
 
 function setCanvas(){
@@ -80,7 +85,7 @@ function setPaletteObject(colors, location){
     requestAnimationFrame(draw);
   }
   // Event to test saveImageToDB function
-  document.addEventListener('keypress', returnImageFromDB);
+  // document.addEventListener('keypress', returnImageFromDB);
 
   // function saveImageToDB(event){
   //   if (event.code === 'Space'){
@@ -123,34 +128,89 @@ function setPaletteObject(colors, location){
   //   }
   // }
 
-  function returnImageFromDB(event){
-    if (event.code === 'Space'){
-      event.preventDefault()
-      url = MASTERPIECE_URL + '/3'
-      obj = {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json'
-          }
+
+
+  function setUpSave(){
+    let saveForm = document.createElement('form')
+    saveForm.classList.add('form')
+    saveForm.id = 'saveForm'
+    let title = document.createElement("INPUT");
+    title.setAttribute("type", "text");
+    title.placeholder = 'Title'
+    saveForm.appendChild(title)
+    let name = document.createElement("INPUT");
+    name.setAttribute("type", "text");
+    name.placeholder = 'Artist'
+    saveForm.appendChild(name)
+    let submit = document.createElement("INPUT");
+    submit.setAttribute("type", "submit");
+    submit.value = 'Save'
+    saveForm.appendChild(submit)
+
+    toolBar.appendChild(saveForm)
+  }
+
+  function fetchMasterpieces(){
+    obj = {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
       }
-
-      // console.log(obj)
-
-      fetch(url, obj)
-      .then(response => response.json())
-      .then(obj => appendReturnedImage(obj))
-      // .then(obj => console.log(obj))
-      .catch(error => console.log(error))
-    } else {
-      console.log('This key don\'t do shit')
     }
+    fetch(MASTERPIECE_URL, obj)
+    .then(response => response.json())
+    .then(obj => setUpLoad(obj))
+    .catch(error => console.log(error))
   }
 
-  function appendReturnedImage(object){
-    let newImage = new Image(width, height)
 
-    newImage.src = object.url
+function setUpLoad(arr){
 
-    ctx.drawImage(newImage, 0, 0)
+  let loadForm = document.createElement('form')
+  loadForm.classList.add('form')
+  loadForm.id = 'loadForm'
+
+  let selecter = document.createElement("SELECT");
+  for (let i = 0; i < arr.length; i++){
+    let option = document.createElement("option")
+    option.text = `${arr[i].name} -- by: ${arr[i].artist.name}`
+    option.value = i + 1
+    selecter.add(option)
   }
+  loadForm.appendChild(selecter)
+  
+  let submit = document.createElement("INPUT");
+  submit.setAttribute("type", "submit");
+  submit.value = 'Load'
+  
+  loadForm.appendChild(submit)
+  loadForm.addEventListener('submit', returnImageFromDB)
+  toolBar.appendChild(loadForm)
+}
+
+function returnImageFromDB(event){
+  event.preventDefault()
+
+  let number = event.srcElement[0].value
+  url = MASTERPIECE_URL + `/${number}`
+  obj = {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  }
+
+  fetch(url, obj)
+  .then(response => response.json())
+  .then(obj => appendReturnedImage(obj))
+  .catch(error => console.log(error))
+}
+
+function appendReturnedImage(object){
+  let newImage = new Image(width, height)
+
+  newImage.src = object.url
+
+  ctx.drawImage(newImage, 0, 0)
+}
 
