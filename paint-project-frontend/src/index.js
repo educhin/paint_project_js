@@ -80,45 +80,63 @@ function setPaletteObject(colors, location){
     requestAnimationFrame(draw);
   }
   // Event to test saveImageToDB function
-  document.addEventListener('keypress', saveImageToDB);
+  document.addEventListener('keypress', returnImageFromDB);
 
-  function saveImageToDB(event){
+  // function saveImageToDB(event){
+  //   if (event.code === 'Space'){
+  //     event.preventDefault()
+
+
+  //     var dataURL = canvas.toDataURL();
+  //     // console.log(dataURL);
+
+  //     let newImage = new Image(width, height)
+
+  //     newImage.src = dataURL
+
+  //     // document.body.appendChild(newImage);
+
+  //     let artistName = 'test';
+  //     let masterpieceName = 'test'
+  
+  //     obj = {
+  //         method: 'POST',
+  //         headers: {
+  //             'Content-Type': 'application/json'
+  //         },
+  //         body: JSON.stringify({
+  //             artist_name: artistName,
+  //             masterpiece_name: masterpieceName,
+  //             masterpiece: dataURL
+  //         })
+  //     }
+
+  //     // console.log(obj)
+  
+  //     fetch(MASTERPIECE_URL, obj)
+  //     .then(response => response.json())
+  //     .then(obj => appendReturnedImage(obj))
+  //     // .then(obj => console.log(obj))
+  //     .catch(error => console.log(error))
+  //   } else {
+  //     console.log('This key don\'t do shit')
+  //   }
+  // }
+
+  function returnImageFromDB(event){
     if (event.code === 'Space'){
       event.preventDefault()
-
-
-      var dataURL = canvas.toDataURL();
-      // console.log(dataURL);
-
-      let newImage = new Image(width, height)
-
-      newImage.src = dataURL
-
-      // document.body.appendChild(newImage);
-
-      let artistName = 'test';
-      let masterpieceName = 'test'
-  
-      // canvas.toBlob(function(blob){
-      //   url = URL.createObjectURL(blob)
-      //   console.log(url)
-      // }, 'image/jpeg', 0.95)
-  
+      url = MASTERPIECE_URL + '/3'
       obj = {
-          method: 'POST',
+          method: 'GET',
           headers: {
               'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              artist_name: artistName,
-              masterpiece_name: masterpieceName,
-              masterpiece: newImage
-          })
+          }
       }
 
       // console.log(obj)
-  
-      fetch(MASTERPIECE_URL, obj)
+
+      fetch(url, obj)
       .then(response => response.json())
       .then(obj => appendReturnedImage(obj))
       // .then(obj => console.log(obj))
@@ -133,6 +151,6 @@ function setPaletteObject(colors, location){
 
     newImage.src = object.url
 
-    document.body.appendChild(newImage);
+    ctx.drawImage(newImage, 0, 0)
   }
 

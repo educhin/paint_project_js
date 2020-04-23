@@ -12,8 +12,15 @@ class MasterpiecesController < ApplicationController
     end
 
     def show
-        masterpiece = Masterpiece.find_by(id: params[:id])
-        render json: masterpiece
+        # if (params[:id]){
+            masterpiece = Masterpiece.find_by(id: params[:id])
+            render json: masterpiece
+        # } else {
+        #     artist = Artist.find_by(name: params[:artist_name])
+        #     masterpiece = Masterpiece.find_by(name: params[masterpiece_name], artist_id: artist.id)
+        #     render json: masterpiece
+        # }
+        
     end
 
     def create
