@@ -9,20 +9,25 @@ const width = canvas.width = window.innerWidth
 const height = canvas.height = window.innerHeight-60;
 const ctx = canvas.getContext('2d');
 
+// Set up objects to act on canvas
 const paletteDiv = document.querySelector('#colorPalette');
 const toolBar = document.querySelector('#toolbar');
 let colorPalette;
+let slider = document.querySelector('.slider')
+let penSize = slider.value;
+slider.addEventListener('change', function(e){
+  penSize = e.srcElement.value
+})
 
- // store mouse pointer coordinates, and whether the button is pressed
- let curX;
- let curY;
- let pressed = false;
+// Store mouse pointer coordinates, and whether the button is pressed
+let curX;
+let curY;
+let pressed = false;
 
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
     draw();
     setUpSave();
-    // setUpLoad();
     fetchMasterpieces();
     fetchPalette(0);
 });
@@ -41,7 +46,6 @@ function fetchPalette(index){
   }
   fetch(PALETTES_URL, obj)
   .then(response => response.json())
-  // .then(obj => console.log(obj))
   .then(obj => obj[index].colors)
   .then(colors => setPaletteObject(colors, paletteDiv))
   .then(palette => palette.setUpPalette())
@@ -54,7 +58,7 @@ function setPaletteObject(colors, location){
   return colorPalette
 }
 
- // update mouse pointer coordinates
+ // Update mouse pointer coordinates
  document.onmousemove = function(e) {
    curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
    curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
@@ -73,97 +77,99 @@ function setPaletteObject(colors, location){
  }
 
  // Looping draw function to be called during initial set up. 
- function draw() {
-    if(pressed) {
-      ctx.fillStyle = colorPalette.currentColor
-
-      ctx.beginPath();
-      ctx.arc(curX, curY-60, 10, degToRad(0), degToRad(360), false);
-      ctx.fill();
-    }
  
-    requestAnimationFrame(draw);
-  }
-  // Event to test saveImageToDB function
-  // document.addEventListener('keypress', returnImageFromDB);
+ function draw() {
+  if(pressed) {
+    ctx.fillStyle = colorPalette.currentColor
 
-  // function saveImageToDB(event){
-  //   if (event.code === 'Space'){
-  //     event.preventDefault()
-
-
-  //     var dataURL = canvas.toDataURL();
-  //     // console.log(dataURL);
-
-  //     let newImage = new Image(width, height)
-
-  //     newImage.src = dataURL
-
-  //     // document.body.appendChild(newImage);
-
-  //     let artistName = 'test';
-  //     let masterpieceName = 'test'
-  
-  //     obj = {
-  //         method: 'POST',
-  //         headers: {
-  //             'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify({
-  //             artist_name: artistName,
-  //             masterpiece_name: masterpieceName,
-  //             masterpiece: dataURL
-  //         })
-  //     }
-
-  //     // console.log(obj)
-  
-  //     fetch(MASTERPIECE_URL, obj)
-  //     .then(response => response.json())
-  //     .then(obj => appendReturnedImage(obj))
-  //     // .then(obj => console.log(obj))
-  //     .catch(error => console.log(error))
-  //   } else {
-  //     console.log('This key don\'t do shit')
-  //   }
-  // }
-
-
-
-  function setUpSave(){
-    let saveForm = document.createElement('form')
-    saveForm.classList.add('form')
-    saveForm.id = 'saveForm'
-    let title = document.createElement("INPUT");
-    title.setAttribute("type", "text");
-    title.placeholder = 'Title'
-    saveForm.appendChild(title)
-    let name = document.createElement("INPUT");
-    name.setAttribute("type", "text");
-    name.placeholder = 'Artist'
-    saveForm.appendChild(name)
-    let submit = document.createElement("INPUT");
-    submit.setAttribute("type", "submit");
-    submit.value = 'Save'
-    saveForm.appendChild(submit)
-
-    toolBar.appendChild(saveForm)
+    ctx.beginPath();
+    ctx.arc(curX, curY-60, penSize, degToRad(0), degToRad(360), false);
+    ctx.fill();
   }
 
-  function fetchMasterpieces(){
+  requestAnimationFrame(draw);
+}
+
+/**************************
+
+Set Up Save Functionality
+
+***************************/
+
+//Build Save Form
+function setUpSave(){
+  let saveForm = document.createElement('form')
+  saveForm.classList.add('form')
+  saveForm.id = 'saveForm'
+  let title = document.createElement("INPUT");
+  title.setAttribute("type", "text");
+  title.placeholder = 'Title'
+  saveForm.appendChild(title)
+  let name = document.createElement("INPUT");
+  name.setAttribute("type", "text");
+  name.placeholder = 'Artist'
+  saveForm.appendChild(name)
+  let submit = document.createElement("INPUT");
+  submit.setAttribute("type", "submit");
+  submit.value = 'Save'
+  saveForm.appendChild(submit)
+  saveForm.addEventListener('submit', saveImageToDB)
+
+  toolBar.appendChild(saveForm)
+}
+
+//Add Functionality to save a Masterpiece to the DB
+function saveImageToDB(event){
+  event.preventDefault()
+  console.log(event)
+
+  var dataURL = canvas.toDataURL();
+
+  let masterpieceName = event.srcElement[0].value;
+  let artistName = event.srcElement[1].value;
+  
+  if (masterpieceName && artistName){
     obj = {
-      method: 'GET',
+      method: 'POST',
       headers: {
           'Content-Type': 'application/json'
-      }
-    }
-    fetch(MASTERPIECE_URL, obj)
-    .then(response => response.json())
-    .then(obj => setUpLoad(obj))
-    .catch(error => console.log(error))
+      },
+      body: JSON.stringify({
+          artist_name: artistName,
+          masterpiece_name: masterpieceName,
+          masterpiece: dataURL
+      })
   }
 
+  fetch(MASTERPIECE_URL, obj)
+  .then(response => response.json())
+  // .then(obj => appendReturnedImage(obj))
+  .then(obj => console.log(obj))
+  .catch(error => console.log(error))
+  }
+}
 
+/**************************
+
+Set Up Load Functionality
+
+***************************/
+
+//Fetch masterpieces
+function fetchMasterpieces(){
+  obj = {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+  }
+  fetch(MASTERPIECE_URL, obj)
+  .then(response => response.json())
+  .then(obj => setUpLoad(obj))
+  .catch(error => console.log(error))
+}
+
+// Build Load Form
 function setUpLoad(arr){
 
   let loadForm = document.createElement('form')
@@ -188,6 +194,7 @@ function setUpLoad(arr){
   toolBar.appendChild(loadForm)
 }
 
+// Add Functionality to Return an Image from the DB
 function returnImageFromDB(event){
   event.preventDefault()
 
@@ -206,6 +213,7 @@ function returnImageFromDB(event){
   .catch(error => console.log(error))
 }
 
+// Display image on top of canvas
 function appendReturnedImage(object){
   let newImage = new Image(width, height)
 
