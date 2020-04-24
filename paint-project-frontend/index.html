@@ -6,9 +6,12 @@
     <link rel="stylesheet" href="styles/styles.css">
   </head>
   <body>
-      <div id="toolbar">
-        <input type="range" min="2" max="30" value="10" class="slider" id="penSize">
+    <div id="toolbar">
+      <div class="sliderContainer">
+        <input type="range" min="2" max="30" value="10" id="penSize">
+        <p><span id="penSizeText"></span></p>
       </div>
+    </div>
 
     <canvas class="myCanvas">
       <p>Add suitable fallback here.</p>

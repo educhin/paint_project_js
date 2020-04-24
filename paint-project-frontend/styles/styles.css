@@ -9,11 +9,21 @@
 #palette, #toolbar {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-around;
     align-items: center;
     height: 60px;
     width: 850px;
     background: grey;
+}
+#palette {
+    width: 250px;
+}
+
+.sliderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .colorSelectBtn {

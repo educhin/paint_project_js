@@ -12,11 +12,17 @@ const ctx = canvas.getContext('2d');
 // Set up objects to act on canvas
 const paletteDiv = document.querySelector('#colorPalette');
 const toolBar = document.querySelector('#toolbar');
+
 let colorPalette;
-let slider = document.querySelector('.slider')
-let penSize = slider.value;
-slider.addEventListener('change', function(e){
-  penSize = e.srcElement.value
+
+let penSize;
+let penSizeSlider = document.querySelector('#penSize')
+let penSizeText = document.getElementById('penSizeText')
+penSize = penSizeText.innerHTML = penSizeSlider.value;
+
+
+penSizeSlider.addEventListener('change', function(e){
+  penSize = penSizeText.innerHTML = e.srcElement.value
 })
 
 // Store mouse pointer coordinates, and whether the button is pressed
