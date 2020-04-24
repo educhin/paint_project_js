@@ -3,7 +3,7 @@ class Palette {
         
         this.colors = colors
         this.location = location
-        this.currentColor = 'white'
+        this.currentColor = '#FFFFFF'
 
     }
     
@@ -12,7 +12,7 @@ class Palette {
         for(var col in this.colors) {
             let btn = document.createElement('button')
             btn.classList.add('colorSelectBtn')   
-            btn.style.backgroundColor = this.colors[col]
+            btn.style.backgroundColor = this.colors[col].hex_value
             const that = this
             btn.addEventListener('click', function(e){
                 that.selectColor(e).bind(that)
