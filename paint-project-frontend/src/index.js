@@ -177,7 +177,6 @@ function fetchMasterpieces(){
 
 // Build Load Form
 function setUpLoad(arr){
-
   let loadForm = document.createElement('form')
   loadForm.classList.add('form')
   loadForm.id = 'loadForm'
@@ -186,7 +185,7 @@ function setUpLoad(arr){
   for (let i = 0; i < arr.length; i++){
     let option = document.createElement("option")
     option.text = `${arr[i].name} -- by: ${arr[i].artist.name}`
-    option.value = i + 1
+    option.value = arr[i].id
     selecter.add(option)
   }
   loadForm.appendChild(selecter)
