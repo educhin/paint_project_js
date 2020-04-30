@@ -18,8 +18,8 @@ let colorPalette;
 let penSize;
 let penSizeSlider = document.querySelector('#penSize')
 let penSizeText = document.getElementById('penSizeText')
-penSize = penSizeText.innerHTML = penSizeSlider.value;
 
+penSize = penSizeText.innerHTML = penSizeSlider.value;
 
 penSizeSlider.addEventListener('change', function(e){
   penSize = penSizeText.innerHTML = e.srcElement.value
@@ -38,11 +38,13 @@ document.addEventListener('DOMContentLoaded', function(){
     fetchPalette(0);
 });
 
+// Set up canvas size and background color
 function setCanvas(){
     ctx.fillStyle = '000000'
     ctx.fillRect(0, 0, width, height)
 }
 
+//Fetch and build color palette 
 function fetchPalette(index){
   let obj = {
     headers: {
@@ -124,7 +126,13 @@ function setUpSave(){
   toolBar.appendChild(saveForm)
 }
 
-//Add Functionality to save a Masterpiece to the DB
+
+/****************************************
+
+Function to SAVE a Masterpiece to the DB
+
+****************************************/
+
 function saveImageToDB(event){
   event.preventDefault()
   console.log(event)
@@ -199,7 +207,11 @@ function setUpLoad(arr){
   toolBar.appendChild(loadForm)
 }
 
-// Add Functionality to Return an Image from the DB
+/****************************************
+
+Function to LOAD a Masterpiece from the DB
+
+****************************************/
 function returnImageFromDB(event){
   event.preventDefault()
 
@@ -218,7 +230,7 @@ function returnImageFromDB(event){
   .catch(error => console.log(error))
 }
 
-// Display image on top of canvas
+// Display image on top of canvas (Used in Load function)
 function appendReturnedImage(object){
   let newImage = new Image(width, height)
 
