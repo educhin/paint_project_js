@@ -1,14 +1,7 @@
 class MasterpiecesController < ApplicationController
     def index
         masterpieces = Masterpiece.all
-        render json: masterpieces.to_json(
-            :only => [:name, :url, :id],
-            :include => {
-                :artist => {
-                    :only => [:name]
-                }
-            }
-        )
+        render json: MasterpieceSerializer.new(masterpieces).to_serialized_json
     end
 
     def show

@@ -1,13 +1,6 @@
 class ArtistsController < ApplicationController
     def index
         artists = Artist.all 
-        render json: artists.to_json(
-            :only => [:name],
-            :include => {
-                :masterpieces => {
-                    :only => [:name, :url]
-                }
-            }
-        )
+        render json: ArtistSerializer.new(artists).to_serialized_json
     end
 end
