@@ -109,14 +109,23 @@ function setUpSave(){
   let saveForm = document.createElement('form')
   saveForm.classList.add('form')
   saveForm.id = 'saveForm'
+  
   let title = document.createElement("INPUT");
   title.setAttribute("type", "text");
+  title.setAttribute("required", true)
+  title.setAttribute("minlength", 3)
+  title.setAttribute("maxlength", 10)
   title.placeholder = 'Title'
   saveForm.appendChild(title)
+
   let name = document.createElement("INPUT");
   name.setAttribute("type", "text");
+  name.setAttribute("required", true)
+  name.setAttribute("minlength", 3)
+  name.setAttribute("maxlength", 10)
   name.placeholder = 'Artist'
   saveForm.appendChild(name)
+
   let submit = document.createElement("INPUT");
   submit.setAttribute("type", "submit");
   submit.value = 'Save'
@@ -159,7 +168,7 @@ function saveImageToDB(event){
   .then(response => response.json())
   // .then(obj => appendReturnedImage(obj))
   .then(obj => console.log(obj))
-  .catch(error => console.log(error))
+  .catch(error => console.log('you thought'))
   }
 }
 
