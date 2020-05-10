@@ -29,8 +29,8 @@
           
     </div>
     
-    <script src="src/palette.js"></script>
-    <script src="src/index.js"></script>
+    <script src="paint-project-frontend/src/palette.js"></script>
+    <script src="paint-project-frontend/src/index.js"></script>
     
   </body>
 </html>
