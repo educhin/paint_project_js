@@ -1,1 +1,36 @@
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Canvas</title>
+    <link rel="stylesheet" href="styles/styles.css">
+  </head>
+  <body>
+    <div id="toolbar">
+      <div class="sliderContainer">
+        <input type="range" min="2" max="30" value="10" id="penSize">
+        <p><span id="penSizeText"></span></p>
+      </div>
+    </div>
+
+    <canvas class="myCanvas">
+      <p>Add suitable fallback here.</p>
+    </canvas>
+
+    <div id="palette">
+      <div id="currentColor">
+        
+      </div>
+
+      <div id="colorPalette">
+        
+      </div>
+          
+    </div>
+    
+    <script src="src/palette.js"></script>
+    <script src="src/index.js"></script>
+    
+  </body>
+</html>
