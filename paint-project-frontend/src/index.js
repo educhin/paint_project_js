@@ -30,6 +30,8 @@ let curX;
 let curY;
 let pressed = false;
 
+let sortButton = document.getElementById('sort')
+
 document.addEventListener('DOMContentLoaded', function(){
     setCanvas();
     draw();
@@ -37,6 +39,70 @@ document.addEventListener('DOMContentLoaded', function(){
     fetchMasterpieces();
     fetchPalette(0);
 });
+// sortButton.addEventListener('click', sortHandler)
+
+// function sortHandler(){
+  
+//   console.log('Clicked!')
+//   // button.innerHTML('Sort')
+//   // button
+
+//   // toolBar.appendChild(button)
+
+//   let obj = {
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Accept": "application/json"
+//     } 
+//   }
+
+//   fetch(MASTERPIECE_URL, obj)
+//   .then(response => response.json())
+//   .then(obj => sortMasterpieces(obj))
+//   .then(arr => displaySortedMasterpieces(arr))
+//   .catch(error => console.log(error))
+
+
+// }
+
+function sortMasterpieces(arr){
+  arr.sort(function(a, b) {
+    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    // names must be equal
+    return 0;
+  });
+  return arr
+}
+
+// function displaySortedMasterpieces(arr){
+//   let sortedUl = document.getElementById('sortUl')
+//   if(!sortedUl){
+//     let ul = document.createElement('ul')
+//     ul.setAttribute('id', 'sortUl')
+//     buildLi(arr, ul)
+//   } 
+  
+//   // else { 
+//   //   document.removeChild(sortedUl)
+//   //   buildLi(arr)
+//   // }
+// }
+
+// function buildLi(arr, ul) {
+//   for (let i = 0; i < arr.length; i++) {
+//     let li = document.createElement('li')
+//     li.innerHTML = `${arr[i].name} -- by: ${arr[i].artist.name}`
+//     ul.appendChild(li)
+//   }
+//   document.body.appendChild(ul)
+// }
 
 // Set up canvas size and background color
 function setCanvas(){
@@ -109,7 +175,7 @@ function setUpSave(){
   let saveForm = document.createElement('form')
   saveForm.classList.add('form')
   saveForm.id = 'saveForm'
-  
+
   let title = document.createElement("INPUT");
   title.setAttribute("type", "text");
   title.setAttribute("required", true)
@@ -168,7 +234,7 @@ function saveImageToDB(event){
   .then(response => response.json())
   // .then(obj => appendReturnedImage(obj))
   .then(obj => console.log(obj))
-  .catch(error => console.log('you thought'))
+  .catch(error => console.log(error))
   }
 }
 
@@ -193,7 +259,8 @@ function fetchMasterpieces(){
 }
 
 // Build Load Form
-function setUpLoad(arr){
+function setUpLoad(array){
+  let arr = sortMasterpieces(array)
   let loadForm = document.createElement('form')
   loadForm.classList.add('form')
   loadForm.id = 'loadForm'
@@ -215,6 +282,8 @@ function setUpLoad(arr){
   loadForm.addEventListener('submit', returnImageFromDB)
   toolBar.appendChild(loadForm)
 }
+
+
 
 /****************************************
 
@@ -246,5 +315,7 @@ function appendReturnedImage(object){
   newImage.src = object.url
 
   ctx.drawImage(newImage, 0, 0)
+
+  // window.alert('you successfully saved your masterpiece!')
 }
 
