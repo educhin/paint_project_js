@@ -1,5 +1,5 @@
 //Fetch URLs
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://paint-project-js-api.herokuapp.com/";
 const PALETTES_URL = `${BASE_URL}/palettes`;
 const MASTERPIECE_URL = `${BASE_URL}/masterpieces`;
 
