@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_04_19_003806) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "artists", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_003806) do
   create_table "colors", force: :cascade do |t|
     t.string "name"
     t.string "hex_value"
-    t.integer "palette_id"
+    t.bigint "palette_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["palette_id"], name: "index_colors_on_palette_id"
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_003806) do
   create_table "masterpieces", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.integer "artist_id"
+    t.bigint "artist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["artist_id"], name: "index_masterpieces_on_artist_id"
