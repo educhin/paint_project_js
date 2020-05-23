@@ -3,3 +3,5 @@
 A basic web redition of the paint app we know and love. 
 
 This app allows the user to save and load up the masterpieces whenever they like.  
+
+See it hosted live at https://educhin.github.io/paint_project_js/paint-project-frontend/ 
